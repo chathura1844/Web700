@@ -1,0 +1,1 @@
+console.log("Welcome to WEB400 - Web Programming")
