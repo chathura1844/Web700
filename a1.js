@@ -5,6 +5,7 @@ var serverResponses = ["Welcome to WEB700 Assignment 1",
                         "Galhena Mudiyanselage Chathura Chamantha:ccgalhena-mudiyansel@myseneca.ca",
                         "User Logged In", "Main Panel", "Logout Complete"];
 
+                        
 function httpRequest(httpVerb, path)
 {
     var i, flag;
@@ -13,7 +14,7 @@ function httpRequest(httpVerb, path)
 
     for(i = 0; i < serverPaths.length; i++)
     {
-        if(serverVerbs[i] == httpVerb)
+        if(serverVerbs[i] == httpVerb && path == serverPaths[i])
         {
             console.log("200 : " + serverResponses[i]);
             flag = 1;                        
@@ -25,23 +26,32 @@ function httpRequest(httpVerb, path)
         console.log("404 : Unable to process " + httpVerb + " request for " + path);
     }
 }
+
+httpRequest("PUT","/logout")
+httpRequest("GET","/about")
+
+function getRandomIntInclusive(min, max) {
+    min = Math.ceil(min);
+    max = Math.floor(max);
+    return Math.floor(Math.random() * (max - min + 1) + min); //The maximum is inclusive and the minimum is inclusive
+}
+// test function
 function automateTests()
 {
-    var testVerbs = ["GET", "POST"];
-    var testPaths = ["/", "/about", "/contact", "/login", "/panel", "/logout", "/randomPath1", "/randomPath2"]
+    testVerbs = ["GET", "POST"];
+    testPaths = ["/", "/about", "/contact", "/login", "/panel", "/logout", "/randomPath1", "/randomPath2"]
 
     function randomRequest()
     {
-        var randVerb, randPath;
+    
 
-        randVerb = getRandomInt(2);
-        randPath = getRandomInt(8);
-
-        httpRequest(testVerbs[randVerb], testPaths[randPath]);        
+        var randVerb = testVerbs[getRandomIntInclusive(0,2)]
+        console.log(randVerb)
+        var randPath = testPaths[getRandomIntInclusive(0,7)]
+        console.log(randPath)
+        httpRequest(randVerb,randPath)       
     }
-    var interval = setInterval(randomRequest(), 1000);
+   setInterval(randomRequest, 1000)
 }
 
-//automateTests();
-
-var interval = setInterval(httpRequest("GET", "/"), 1000);
+automateTests()
